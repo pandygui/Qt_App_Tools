@@ -49,6 +49,7 @@ private:
     int count;
 
     void Draw_Circle();
+    QPoint offset;
 
 private slots:
     void Draw_Timer();
@@ -56,6 +57,9 @@ private slots:
 
 protected:
     void paintEvent(QPaintEvent *);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseDoubleClickEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 };
 

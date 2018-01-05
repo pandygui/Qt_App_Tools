@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QMouseEvent>
 
 #define DRAW_CIR_Timer 10       //定时器触发时间
 
@@ -17,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent) :
 //    resize(500,500);
 //    pix = QPixmap(500,500);
 //    pix.fill(Qt::white);
+    QCursor cursor;
+    cursor.setShape(Qt::OpenHandCursor);
+    setCursor(cursor);
 
     p_timer = new QTimer();
     connect(p_timer,SIGNAL(timeout()),this,SLOT(Draw_Timer()));//连接信号到槽
@@ -174,4 +178,24 @@ void MainWindow::paintEvent(QPaintEvent *)
         pp.drawEllipse(cirPoint10.x(),cirPoint10.y(),cir_R,cir_R);
         paint.drawPixmap(0,0,pix);
     }
+}
+
+void MainWindow::mousePressEvent(QMouseEvent *event)
+{
+    if(event->button()==Qt::LeftButton)
+    {
+        QCursor cursor;
+        cursor.setShape(Qt::ClosedHandCursor);
+        QApplication::setOverrideCursor(cursor);
+        offset=event->globalPos()-pos();
+    }
+}
+void MainWindow::mouseReleaseEvent(QMouseEvent *)
+{
+    QApplication::restoreOverrideCursor();
+}
+
+void MainWindow::mouseDoubleClickEvent(QMouseEvent *)
+{
+    QApplication::exit(0);
 }
